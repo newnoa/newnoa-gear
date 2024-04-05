@@ -1,0 +1,15 @@
+dependencyResolutionManagement {
+    repositories {
+        maven {
+            url "http://nexus.newnoa.com/repository/newnoa/"
+            allowInsecureProtocol = true
+        }
+        gradlePluginPortal()
+    }
+    versionCatalogs {
+        libs {
+            from("com.newnoa:newnoa-library:0.0.8")
+        }
+    }
+}
+rootProject.name = 'newnoa-gear'

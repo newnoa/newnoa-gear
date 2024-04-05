@@ -1,0 +1,14 @@
+apply plugin: 'com.diffplug.spotless'
+
+spotless {
+    java {
+        googleJavaFormat('1.21.0').aosp().reflowLongStrings().groupArtifact('com.google.googlejavaformat:google-java-format')
+        licenseHeaderFile rootProject.file('code-analysis/spotless/license-header')
+    }
+
+}
+
+tasks.register('installGitHooks', Copy) {
+    from './scripts/hooks/pre-commit', './scripts/hooks/pre-push'
+    into './.git/hooks'
+}

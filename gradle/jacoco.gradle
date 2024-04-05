@@ -1,0 +1,61 @@
+//https://docs.gradle.org/current/userguide/jacoco_plugin.html
+apply plugin: 'jacoco'
+
+jacoco {
+    // https://www.eclemma.org/jacoco/
+    toolVersion = "0.8.11"
+    reportsDirectory = file("$buildDir/code-analysis/jacocoReportDir")
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = true
+        csv.required = true
+        html.required = true
+
+        xml.outputLocation = file("${buildDir}/code-analysis/jacoco/coverage-reports/jacoco.xml")
+        csv.outputLocation = file("${buildDir}/code-analysis/jacoco/coverage-reports/jacoco.csv")
+        html.outputLocation = file("${buildDir}/code-analysis/jacoco/coverage-reports/html")
+    }
+}
+//tasks.check.dependsOn jacocoTestReport
+
+// JaCoCo覆盖率计数器
+// JaCoCo 包含了多种尺度的覆盖率计数器（Coverage Counters），
+// 包含指令级（Instructions,C0 coverage)、
+// 分支（Branches,C1 coverage）、
+// 圈复杂度（Cyclomatic Complexity）、
+// 行（Lines）、
+// 方法（Methods）、
+// 类（Classes）。
+// 具体可参考JaCoCo覆盖率计数器。 https://www.cnblogs.com/ycyzharry/p/10995582.html
+jacocoTestCoverageVerification {
+    violationRules {
+
+        rule {
+            enabled = true
+            element = 'PACKAGE'
+//            includes = ['com.newnoa.*.resource', 'com.newnoa.*.service']
+            includes = ['com.newnoa.*']
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.75
+            }
+            limit {
+                counter = 'LINE'
+                minimum = 0.75
+            }
+            limit {
+                counter = 'METHOD'
+                minimum = 0.75
+            }
+            limit {
+                counter = 'CLASS'
+                minimum = 0.100
+            }
+        }
+    }
+}
+

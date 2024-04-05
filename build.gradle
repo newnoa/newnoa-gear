@@ -1,0 +1,58 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id "io.quarkus" version "${quarkusPluginVersion}"
+
+    id "pmd"
+    id "jacoco"
+    id "checkstyle"
+    alias libs.plugins.spotless
+    alias libs.plugins.spotbugs
+    alias libs.plugins.sonarqube
+    alias libs.plugins.dependency.check
+}
+
+group = "com.newnoa"
+version hasProperty("VERSION") ? property("VERSION") : "1.0.0"
+ext.env = hasProperty("env") ? env : null
+
+apply from: rootProject.file("gradle/spotless.gradle")
+apply from: rootProject.file("gradle/checkstyle.gradle")
+apply from: rootProject.file("gradle/pmd.gradle")
+apply from: rootProject.file("gradle/spotbugs.gradle")
+apply from: rootProject.file("gradle/jacoco.gradle")
+apply from: rootProject.file("gradle/sonarqube.gradle")
+
+repositories {
+    maven {
+        url "http://nexus.newnoa.com/repository/newnoa/"
+        allowInsecureProtocol = true
+    }
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-rest'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
