@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.newnoa.wheel;
+package com.newnoa.wheel.resource;
 
 import com.newnoa.wheel.resource.GreetingResourceTest;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
