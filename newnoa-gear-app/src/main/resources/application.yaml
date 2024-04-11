@@ -1,0 +1,20 @@
+quarkus:
+  application:
+    name: newnoa-gear
+  otel:
+    exporter:
+      otlp:
+        traces:
+          endpoint: http://192.168.210.221:4317
+  neo4j:
+    uri: bolt://127.0.0.1:7687
+    authentication:
+      disabled: true
+#  neo4j:
+#    uri: bolt://192.168.210.201:7687
+#    authentication:
+#      username: neowei
+#      password: gaoyuan210
+  log:
+    console:
+      format: '%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n'

@@ -33,7 +33,7 @@ sonarqube {
 }
 
 //查询sonar分析工程是否通过
-tasks.register('queryStatus') {
+tasks.register('sonarQueryStatus') {
     try {
         //先创建出了一个URL对象，urlPath：是我们访问接口地址
         String urlPath = sonar.host + "/api/qualitygates/project_status?projectKey=" + sonar.projectkey
@@ -54,7 +54,7 @@ tasks.register('queryStatus') {
         //获取本次网络请求的状态码
         int code = urlConnection.getResponseCode();
         //如果本次返回的状态吗是200（成功）
-        println("http code:" + code)
+        println("sonarQueryStatus: http code: " + code)
         if (code == 200) {
             //调用urlConnection.getInputStream得到本次请求所返回的结果流
             InputStream inputStream = urlConnection.getInputStream();
@@ -69,7 +69,7 @@ tasks.register('queryStatus') {
             String result = buffer.toString();
             inputStream.close();
             def parsedJson = new JsonSlurper().parseText(result)
-            println(sonar.projectkey + " ---> status:" + parsedJson.projectStatus.status)
+            println("sonarQueryStatus: " + sonar.projectkey + " ---> status:" + parsedJson.projectStatus.status)
         }
     } catch (MalformedURLException e) {
         // TODO Auto-generated catch block

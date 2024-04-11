@@ -1,0 +1,28 @@
+plugins {
+    id "io.quarkus" version "${quarkusPluginVersion}"
+}
+group rootProject.group
+version rootProject.version
+
+dependencies {
+    if (env == 'dev' || env == 'sit') {
+        compileQuarkusGeneratedSourcesJava.dependsOn(pmdMain)
+        compileQuarkusGeneratedSourcesJava.dependsOn(spotbugsMain)
+    }
+    implementation "io.quarkus:quarkus-rest"
+    implementation "io.quarkus:quarkus-rest-jackson"
+    implementation "io.quarkus:quarkus-config-yaml"
+    implementation "io.quarkiverse.neo4j:quarkus-neo4j:3.9.0"
+    if (neo4jEmbedded == 'true') {
+        println "neo4jEmbedded: implementation"
+        implementation "org.apache.logging.log4j:log4j-core:2.23.1"
+        implementation "org.neo4j:neo4j:5.18.1"
+        implementation "javax.ws.rs:javax.ws.rs-api:2.1.1"
+        implementation "javax.validation:validation-api:2.0.1.Final"
+        implementation "javax.activation:activation:1.1.1"
+    } else {
+        println "neo4jEmbedded: compileOnly"
+        compileOnly "org.neo4j:neo4j:5.18.1"
+    }
+}
+

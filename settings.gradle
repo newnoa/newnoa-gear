@@ -13,3 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'newnoa-gear'
+include "newnoa-gear-app"

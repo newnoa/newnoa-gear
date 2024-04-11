@@ -1,0 +1,45 @@
+/*
+ * Copyright (c) 2024-2030, newnoa (newnoa@aliyun.com & https://www.newnoa.com/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.newnoa.gear;
+
+import io.quarkus.runtime.Quarkus;
+import io.quarkus.runtime.QuarkusApplication;
+import io.quarkus.runtime.annotations.QuarkusMain;
+
+/**
+ * main.
+ *
+ * @author: Neowei
+ * @date: 2024/4/5 14:15
+ */
+@QuarkusMain
+public class WheelMain {
+    public static void main(String... args) {
+
+        Quarkus.run(MyApp.class, args);
+    }
+
+    public static class MyApp implements QuarkusApplication {
+
+        @Override
+        public int run(String... args) throws Exception {
+//            Neo4jEmbeddedDatabaseService.startup();
+            Quarkus.waitForExit();
+            return 0;
+        }
+    }
+}
